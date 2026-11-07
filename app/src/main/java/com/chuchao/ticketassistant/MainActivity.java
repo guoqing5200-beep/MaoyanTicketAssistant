@@ -193,7 +193,7 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
                 return;
             }
-
+final String targetUrl = url;
             new AlertDialog.Builder(this)
                 .setTitle("准备进入猫眼")
                 .setMessage(
@@ -205,7 +205,7 @@ public class MainActivity extends Activity {
                 )
                 .setNegativeButton("取消", null)
                 .setPositiveButton("进入购票页面",
-                    (dialog, which) -> openMaoyan(url))
+                    (dialog, which) -> openMaoyan(targetUrl))
                 .show();
         });
 
