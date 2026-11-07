@@ -1,4 +1,3 @@
-
 name: Build Android APK
 
 on:
@@ -28,5 +27,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: name: MaoyanTicketAssistant-debug-apk
+          name: MaoyanTicketAssistant-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
