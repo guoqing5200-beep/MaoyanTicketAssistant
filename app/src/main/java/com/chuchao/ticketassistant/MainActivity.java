@@ -164,9 +164,39 @@ public class MainActivity extends Activity {
         addLabel("四、猫眼购票链接");
 
         ticketUrl = new EditText(this);
-        ticketUrl.setSingleLine(true);
-        ticketUrl.setHint("粘贴猫眼比赛购票链接");
-        homeLayout.addView(ticketUrl);
+ticketUrl.setSingleLine(false);
+ticketUrl.setMinLines(2);
+ticketUrl.setHint("粘贴猫眼HTTPS链接或微信#小程序://分享内容");
+homeLayout.addView(ticketUrl);
+
+Button recognize = new Button(this);
+recognize.setText("识别微信小程序链接");
+homeLayout.addView(recognize);
+
+recognize.setOnClickListener(v -> {
+    String value = ticketUrl.getText().toString().trim();
+
+    if (value.startsWith("#小程序://")) {
+        new AlertDialog.Builder(this)
+            .setTitle("已识别微信小程序分享格式")
+            .setMessage(
+                "已识别猫眼小程序分享内容：\n\n" +
+                value +
+                "\n\n请通过微信打开该分享内容，进入猫眼对应购票页面后，再获取官方HTTPS购票链接。"
+            )
+            .setPositiveButton("知道了", null)
+            .show();
+    } else if (value.startsWith("https://") &&
+               value.contains("maoyan.com")) {
+        Toast.makeText(this,
+            "识别到猫眼HTTPS链接",
+            Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(this,
+            "暂不支持该链接格式，请检查复制内容",
+            Toast.LENGTH_SHORT).show();
+    }
+});
 
         Button start = new Button(this);
         start.setText("开始抢票 / 进入猫眼");
@@ -180,12 +210,25 @@ public class MainActivity extends Activity {
                 url = "https://m.maoyan.com/";
             }
 
-            if (!url.startsWith("https://")) {
-                Toast.makeText(this,
-                    "请输入安全的 HTTPS 链接",
-                    Toast.LENGTH_SHORT).show();
-                return;
-            }
+            if (url.startsWith("#小程序://")) {
+    new AlertDialog.Builder(this)
+        .setTitle("微信小程序链接")
+        .setMessage(
+            "已识别猫眼小程序分享内容。\n\n" +
+            "请复制这段内容，通过微信打开小程序，" +
+            "进入对应购票页面后获取官方HTTPS链接。"
+        )
+        .setPositiveButton("知道了", null)
+        .show();
+    return;
+}
+
+if (!url.startsWith("https://")) {
+    Toast.makeText(this,
+        "请输入HTTPS链接或识别微信小程序链接",
+        Toast.LENGTH_SHORT).show();
+    return;
+}
 
             if (!url.contains("maoyan.com")) {
                 Toast.makeText(this,
