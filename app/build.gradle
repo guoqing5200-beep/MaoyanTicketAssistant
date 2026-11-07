@@ -1,14 +1,13 @@
-
 plugins {
     id 'com.android.application'
 }
 
 android {
-    namespace 'com.chuchao.ticketassistant'
+    namespace 'com.maoyan.ticketassistant'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'com.chuchao.ticketassistant'
+        applicationId 'com.maoyan.ticketassistant'
         minSdk 23
         targetSdk 35
         versionCode 1
